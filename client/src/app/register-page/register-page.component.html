@@ -1,0 +1,143 @@
+<div class="wrapper">
+  <mat-card class="card">
+    <form class="register-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h1 class="center">Sign Up</h1>
+      <!-- Name Input -->
+      <mat-form-field class="full-width">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Vasia Pupkin"
+          formControlName="name"
+        />
+        <span *ngIf="form.get('name').valid" class="material-icons done-icon">
+          done
+        </span>
+        <span
+          *ngIf="
+            form.get('name').invalid &&
+            form.get('name').touched &&
+            form.get('name').errors['required']
+          "
+          class="material-icons error-icon"
+        >
+          error
+        </span>
+        <mat-error
+          *ngIf="
+            form.get('name').invalid &&
+            form.get('name').touched &&
+            form.get('name').errors['required']
+          "
+        >
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <!-- Email Input -->
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          placeholder="pat@example.com"
+          formControlName="email"
+          (keyup)="emailCheck($event)"
+        />
+        <span *ngIf="form.get('email').valid" class="material-icons done-icon">
+          done
+        </span>
+        <span
+          *ngIf="
+            (form.get('email').invalid &&
+              form.get('email').touched &&
+              form.get('email').errors['required']) ||
+            (form.get('email').invalid &&
+              form.get('email').touched &&
+              form.get('email').errors['email']) ||
+            emailExists !== ''
+          "
+          class="material-icons error-icon"
+        >
+          error
+        </span>
+        <mat-error
+          *ngIf="
+            form.get('email').invalid &&
+            form.get('email').touched &&
+            form.get('email').errors['email']
+          "
+        >
+          Please enter a valid email address
+        </mat-error>
+        <mat-error
+          *ngIf="
+            form.get('email').invalid &&
+            form.get('email').touched &&
+            form.get('email').errors['required']
+          "
+        >
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <!-- Password Input -->
+      <mat-form-field class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <span
+          *ngIf="form.get('password').valid"
+          class="material-icons done-icon"
+        >
+          done
+        </span>
+        <span
+          *ngIf="
+            (form.get('password').invalid &&
+              form.get('password').touched &&
+              form.get('password').errors['required']) ||
+            (form.get('password').invalid &&
+              form.get('password').touched &&
+              form.get('password').errors['minlength'] &&
+              form.get('password').errors['minlength']['requiredLength'])
+          "
+          class="material-icons error-icon"
+        >
+          error
+        </span>
+        <mat-error
+          *ngIf="
+            form.get('password').invalid &&
+            form.get('password').touched &&
+            form.get('password').errors['required']
+          "
+        >
+          Password is <strong>required</strong>
+        </mat-error>
+        <mat-error
+          *ngIf="
+            form.get('password').invalid &&
+            form.get('password').touched &&
+            form.get('password').errors['minlength'] &&
+            form.get('password').errors['minlength']['requiredLength']
+          "
+        >
+          Password has to be more then
+          {{ form.get("password").errors["minlength"]["requiredLength"] }}
+          characters! Now is
+          {{ form.get("password").errors["minlength"]["actualLength"] }} length!
+        </mat-error>
+      </mat-form-field>
+
+      <!-- <div class="btn"> -->
+      <button
+        mat-raised-button
+        type="submit"
+        class="btn"
+        [disabled]="form.invalid || form.disabled"
+      >
+        Sign up
+      </button>
+      <!-- </div> -->
+    </form>
+  </mat-card>
+</div>

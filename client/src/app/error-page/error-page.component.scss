@@ -1,0 +1,33 @@
+@import "../../config";
+
+.error-container {
+    width: $width;
+    @include flexContainer(column);
+
+    h1 {
+        color: $invalid-color;
+        font-size: 1.6rem;
+        margin-top: 3rem;
+
+        span {
+            color: $invalid-color;
+            font-size: 2rem;
+        }
+
+        small {
+            color: black;
+        }
+    }
+
+    .btn {
+        margin-top: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .error-container {
+        h1 {
+            font-size: 2rem;
+        }
+    }
+}

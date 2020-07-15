@@ -1,0 +1,168 @@
+@import "../../../../config";
+.wrapper {
+    margin-top: 2rem;
+    width: 100%;
+
+    .button-container {
+        width: 100%;
+        @include flexContainer(row);
+        margin-bottom: 1rem;
+
+        button {
+            background-color: rgb(1, 190, 1);
+        }
+
+        .close-btn {
+            background-color: rgb(67, 209, 156);
+        }
+    }
+
+    form {
+        text-align: center;
+        width: 100%;
+        .form {
+            width: 100%;
+            @include flexContainer(column);
+
+            .name-quantity-container {
+                width: 100%;
+                @include flexContainer(column);
+
+                .name-input,
+                .quantity-input {
+                    width: 100%;
+                }
+            }
+
+            .price-option-container {
+                width: 100%;
+                @include flexContainer(column);
+
+                .price,
+                .option,
+                .currency {
+                    width: 100%;
+                }
+            }
+        }
+        .btn-add-position {
+            margin-top: 1rem;
+        }
+    }
+
+    .list-wrapper {
+        margin-top: 1rem;
+        overflow: hidden;
+        padding: 0 10px;
+        width: 100%;
+
+        .list {
+            width: 100%;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            .list-item {
+                margin: 1rem 0;
+                border-radius: 10px;
+                background-color: $main-background-color;
+                box-shadow: -2px -5px 5px rgb(182, 182, 182), 2px 5px 5px black;
+                cursor: pointer;
+                padding: 0.5rem;
+                transition: all 0.5s ease;
+                &:hover {
+                    background-color: rgb(223, 234, 238);
+                }
+
+                .list-checkbox {
+                    @include flexContainer(row);
+
+                    .checkbox {
+                        margin-right: 0.5rem;
+                    }
+
+                    .delete-icon {
+                        cursor: pointer;
+                        color: $invalid-color;
+                    }
+                }
+
+                .flex {
+                    width: 100%;
+                    @include flexContainer(row);
+                    justify-content: space-between;
+
+                    .currency-title {
+                        font-family: "Helvetica Neue", serif;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+        .total {
+            text-align: center;
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+        }
+    }
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: rgb(1, 190, 1) !important;
+}
+
+.empty {
+    width: 100%;
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.3;
+}
+
+@media (min-width: 460px) {
+    .wrapper {
+        width: 450px;
+        margin: 0 auto;
+        .list,
+        form {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        form {
+            .form {
+                .name-quantity-container {
+                    .name-input {
+                        width: 45%;
+                    }
+                }
+
+                .price-option-container {
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-self: center;
+
+                    .price {
+                        width: 20%;
+                    }
+                    .currency,
+                    .option {
+                        width: 30%;
+                    }
+                }
+
+                .name-quantity-container {
+                    flex-direction: row;
+                    justify-content: space-between;
+                    .quantity-input {
+                        width: 35%;
+                    }
+                }
+            }
+        }
+    }
+}

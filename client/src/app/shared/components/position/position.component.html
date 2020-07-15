@@ -1,0 +1,237 @@
+<div class="wrapper">
+  <!-- add button -->
+  <div class="button-container">
+    <button
+      mat-fab
+      color="primary"
+      aria-label="Complete shopping"
+      #tooltip="matTooltip"
+      matTooltip="show menu"
+      matTooltipPosition="above"
+      (click)="showAddPositionMenu = !showAddPositionMenu"
+      [ngClass]="{ 'close-btn': showAddPositionMenu }"
+    >
+      <mat-icon *ngIf="!showAddPositionMenu; else minus">add</mat-icon>
+      <ng-template #minus>
+        <mat-icon>clear</mat-icon>
+      </ng-template>
+    </button>
+  </div>
+  <!-- end add button -->
+
+  <!-- position form -->
+  <form
+    [formGroup]="form"
+    #formDirective="ngForm"
+    (ngSubmit)="onSubmit(formDirective)"
+    *ngIf="showAddPositionMenu"
+    [@fadeIn]="fadeIn"
+    [@fadeOut]="fadeOut"
+  >
+    <div class="form">
+      <!-- name -->
+      <div class="name-quantity-container">
+        <mat-form-field appearance="legacy" class="name-input">
+          <mat-label>Name of position</mat-label>
+          <input
+            matInput
+            maxlength="18"
+            placeholder="name"
+            formControlName="name"
+          />
+          <mat-icon
+            matSuffix
+            class="input-icon"
+            [ngClass]="{
+              invalid: form.get('name').invalid && form.get('name').touched,
+              valid: form.get('name').valid
+            }"
+            >sentiment_very_satisfied</mat-icon
+          >
+          <mat-error
+            *ngIf="form.get('name').invalid && form.get('name').touched"
+            >Name requared.</mat-error
+          >
+        </mat-form-field>
+        <!-- end name -->
+
+        <!-- quantity -->
+        <mat-form-field class="quantity-input" appearance="legacy">
+          <mat-label>Quantity</mat-label>
+          <input
+            matInput
+            placeholder="quantity"
+            type="number"
+            min="0"
+            max="12"
+            formControlName="quantity"
+          />
+          <mat-icon
+            matSuffix
+            [ngClass]="{
+              invalid:
+                form.get('quantity').invalid && form.get('quantity').touched,
+              valid: form.get('quantity').valid
+            }"
+            >sentiment_very_satisfied</mat-icon
+          >
+          <mat-error
+            *ngIf="form.get('quantity').invalid && form.get('quantity').touched"
+            >Price requared.</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <!-- end quantity -->
+
+      <!-- price -->
+      <div class="price-option-container">
+        <mat-form-field class="price" appearance="legacy">
+          <mat-label>Price</mat-label>
+          <input
+            matInput
+            placeholder="price"
+            type="number"
+            min="0"
+            max="12"
+            formControlName="price"
+          />
+          <mat-icon
+            matSuffix
+            [ngClass]="{
+              invalid: form.get('price').invalid && form.get('price').touched,
+              valid: form.get('price').valid
+            }"
+            >sentiment_very_satisfied</mat-icon
+          >
+          <mat-error
+            *ngIf="form.get('price').invalid && form.get('price').touched"
+            >Price requared.</mat-error
+          >
+        </mat-form-field>
+        <!-- end price -->
+
+        <!-- currency -->
+
+        <mat-form-field class="currency">
+          <mat-label>Currency</mat-label>
+          <mat-select name="currency" formControlName="currency">
+            <mat-option
+              *ngFor="let currency of shoppingCurrency"
+              [value]="currency.value"
+              [disabled]="positions.length !== 0"
+            >
+              {{ currency.viewValue }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="form.get('currency').invalid && form.get('currency').touched"
+            >Choose an currency</mat-error
+          >
+        </mat-form-field>
+        <!-- end currency -->
+        <mat-form-field class="option">
+          <mat-label>Category</mat-label>
+          <mat-select name="category" formControlName="category">
+            <mat-option
+              *ngFor="let category of shoppingCategory"
+              [value]="category.value"
+            >
+              {{ category.viewValue }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="form.get('category').invalid && form.get('category').touched"
+            >Choose an category</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <button
+      type="submit"
+      color="primary"
+      class="btn-add-position"
+      mat-raised-button
+      [disabled]="form.disabled || form.invalid"
+    >
+      Add
+      <span class="material-icons">
+        add_shopping_cart
+      </span>
+    </button>
+  </form>
+
+  <!-- positions list -->
+  <div class="list-wrapper" *ngIf="loader; else loaderApp">
+    <ul role="list" class="list" *ngIf="positions.length !== 0; else empty">
+      <li
+        class="list-item"
+        *ngFor="let position of positions; trackBy: identify"
+        (click)="openDialog(position)"
+        [@delete]="position.state"
+      >
+        <div class="flex">
+          <div [ngClass]="{ completed: position.completed }">
+            <strong>{{ position.name | titlecase }}</strong>
+            <p>
+              <small class="currency-title">quantity:</small>
+              {{ position.quantity }}
+            </p>
+            <p *ngIf="position.currency == 'usd'">
+              <span><small class="currency-title">price: </small></span>
+              <small>{{ position.cost | currency: "USD":"symbol" }}</small>
+            </p>
+            <p *ngIf="position.currency == 'eur'">
+              <span><small class="currency-title">price: </small></span>
+              <small>{{ position.cost | currency: "EUR":"symbol" }}</small>
+            </p>
+            <p *ngIf="position.currency == 'pln'">
+              <span><small class="currency-title">price: </small></span>
+              <small>{{ position.cost | currency: "&#122;&#322;" }}</small>
+            </p>
+            <span
+              ><small
+                ><span class="currency-title">category:</span>
+                {{ position.category | titlecase }}</small
+              ></span
+            >
+          </div>
+
+          <div class="list-checkbox">
+            <mat-checkbox
+              class="checkbox"
+              [checked]="position.completed"
+              [disabled]="disabled && position._id == completedId"
+              (change)="toggleUpdatePosition($event, position._id)"
+              (click)="checBoxStopPropagation()"
+            ></mat-checkbox>
+            <span
+              class="material-icons delete-icon checkbox"
+              (click)="deletePosition($event, position._id, position.name)"
+            >
+              remove_shopping_cart
+            </span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <p class="total" *ngIf="totalCurrency == 'eur'">
+      <strong> Total:</strong> {{ priceTotal | currency: "EUR":"symbol" }}
+    </p>
+    <p class="total" *ngIf="totalCurrency == 'usd'">
+      <strong> Total:</strong> {{ priceTotal | currency: "USD":"symbol" }}
+    </p>
+    <p class="total" *ngIf="totalCurrency == 'pln'">
+      <strong> Total:</strong>
+      {{ priceTotal | currency: "&#122;&#322;":"symbol" }}
+    </p>
+  </div>
+  <ng-template #empty>
+    <div class="empty">
+      No Positions Right Now.
+    </div>
+  </ng-template>
+</div>
+
+<ng-template #loaderApp>
+  <app-loader></app-loader>
+</ng-template>

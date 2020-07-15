@@ -1,0 +1,105 @@
+<div class="wrapper">
+  <header>
+    <!-- header toolbar -->
+    <mat-toolbar color="primary" class="header">
+      <div routerLink="/">
+        <img class="logo" src="../../../../assets/logo-todo.png" alt="logo" />
+      </div>
+      <!-- nav list -->
+
+      <nav #parent>
+        <div class="burger" (click)="animate()">
+          <div class="line" [@close1]="closeAnime"></div>
+          <div class="line" [@close2]="closeAnime"></div>
+          <div class="line" [@close3]="closeAnime"></div>
+        </div>
+        <mat-nav-list
+          [@menu]="animeMenu"
+          class="nav-links"
+          [ngClass]="{
+            'nav-links': true
+          }"
+          [disableRipple]="true"
+        >
+          <ng-container *ngIf="!authService.isAuthenticated(); else auth">
+            <div
+              class="list"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: false }"
+              [ngClass]="{
+                'show-menu-1': animeMenu === 'end'
+              }"
+              *ngIf="!linksShowHide"
+              (click)="animate()"
+            >
+              <a mat-list-item routerLink="/login"> Login </a>
+            </div>
+            <div
+              class="list"
+              routerLinkActive="active"
+              [ngClass]="{
+                'show-menu-2': animeMenu === 'end'
+              }"
+              *ngIf="!linksShowHide"
+              (click)="animate()"
+            >
+              <a mat-list-item routerLink="/register"> Register </a>
+            </div>
+          </ng-container>
+
+          <ng-template #auth>
+            <div
+              class="list"
+              routerLinkActive="active"
+              [ngClass]="{
+                'show-menu-3': animeMenu === 'end'
+              }"
+              *ngIf="!linksShowHide"
+              (click)="animate()"
+            >
+              <a mat-list-item routerLink="/todos"> Todos </a>
+            </div>
+            <div
+              class="list"
+              routerLinkActive="active"
+              [ngClass]="{
+                'show-menu-4': animeMenu === 'end'
+              }"
+              *ngIf="!linksShowHide"
+              (click)="animate()"
+            >
+              <a mat-list-item routerLink="/history"> History Todos </a>
+            </div>
+            <div
+              class="list"
+              routerLinkActive="active"
+              [ngClass]="{
+                'show-menu-5': animeMenu === 'end'
+              }"
+              *ngIf="!linksShowHide"
+            >
+              <a mat-list-item (click)="logOut($event)" (click)="animate()">
+                Log out
+              </a>
+            </div>
+          </ng-template>
+        </mat-nav-list>
+      </nav>
+    </mat-toolbar>
+  </header>
+
+  <main>
+    <!-- container for all content -->
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+  <!-- Footer to the bottom -->
+  <div class="footer-bottom"></div>
+  <!-- footer -->
+  <footer>
+    <mat-toolbar color="primary" class="footer">
+      <p class="center">Created by R3D</p>
+    </mat-toolbar>
+  </footer>
+</div>

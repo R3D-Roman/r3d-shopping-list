@@ -1,0 +1,48 @@
+<h2 mat-dialog-title class="center">Shopping List</h2>
+<ng-container *ngIf="positions.length != 0; else loader">
+  <mat-dialog-content class="mat-typography">
+    <mat-list role="list" class="list-container">
+      <div *ngFor="let position of positions" class="list">
+        <p>
+          <strong>{{ position.name | titlecase }}</strong>
+        </p>
+        <p><strong>Quantity:</strong> {{ position.quantity }}</p>
+        <!--  -->
+        <p *ngIf="position.currency == 'usd'">
+          <span><strong class="currency-title">Price: </strong></span>
+          {{ position.cost | currency: "USD":"symbol" }}
+        </p>
+        <p *ngIf="position.currency == 'eur'">
+          <span><strong class="currency-title">Price: </strong></span>
+          {{ position.cost | currency: "EUR":"symbol" }}
+        </p>
+        <p *ngIf="position.currency == 'pln'">
+          <span><strong class="currency-title">Price: </strong></span>
+          {{ position.cost | currency: "&#122;&#322;" }}
+        </p>
+        <!--  -->
+      </div>
+    </mat-list>
+    <p>
+      <strong>Total: </strong>
+      <span *ngIf="currency == 'usd'">
+        {{ total | currency: "USD":"symbol" }}</span
+      >
+      <span *ngIf="currency == 'eur'">{{
+        total | currency: "EUR":"symbol"
+      }}</span>
+      <span *ngIf="currency == 'pln'">{{
+        total | currency: "&#122;&#322;"
+      }}</span>
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="btn-action">
+    <button mat-raised-button mat-dialog-close color="primary">Cancel</button>
+  </mat-dialog-actions>
+</ng-container>
+
+<ng-template #loader>
+  <div class="loader">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+</ng-template>

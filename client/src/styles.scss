@@ -1,0 +1,105 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+@-webkit-keyframes showMenu-list {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes showMenu-list {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+@import "./config";
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    min-height: 100vh;
+}
+
+.center {
+    @include textCenter;
+}
+
+// Anime
+
+
+// show menu list
+.show-menu-1 {
+    -webkit-animation: showMenu-list 1.5s ease-out 500ms both;
+    animation: showMenu-list 1.5s ease-out 500ms both;
+}
+.show-menu-2 {
+    -webkit-animation: showMenu-list 1.5s ease-out 700ms both;
+    animation: showMenu-list 1.5s ease-out 700ms both;
+}
+.show-menu-3 {
+    -webkit-animation: showMenu-list 1.5s ease-out 900ms both;
+    animation: showMenu-list 1.5s ease-out 900ms both;
+}
+.show-menu-4 {
+    -webkit-animation: showMenu-list 1.5s ease-out 1100ms both;
+    animation: showMenu-list 1.5s ease-out 1100ms both;
+}
+
+.show-menu-5 {
+    -webkit-animation: showMenu-list 1.5s ease-out 1300ms both;
+    animation: showMenu-list 1.5s ease-out 1300ms both;
+}
+
+//
+
+.active {
+    background-color: $active-links-color;
+    border-radius: 10px;
+}
+
+.error {
+    @include set-background($error-bg-color);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.error button {
+    @include set-background($error-btn-color);
+}
+
+.done {
+    @include set-background($done-bg-color);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.done button {
+    @include set-background($done-btn-color);
+}
+
+.valid {
+    color: $valid-color;
+}
+
+.invalid {
+    color: $invalid-color;
+}
+
+@media (min-width: 769px) {
+    .active {
+        background-color: $desktop-links-color;
+    }
+}

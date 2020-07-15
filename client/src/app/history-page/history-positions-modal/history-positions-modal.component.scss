@@ -1,0 +1,45 @@
+@import "../../../config";
+
+::ng-deep .mat-dialog-container {
+    background-color: $main-background-color;
+}
+
+.list-container {
+    @include flexContainer(column);
+
+    .list {
+        width: 100%;
+        border: 2px dotted black;
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+        border-radius: 10px;
+        text-align: center;
+        background-color: $history-card-bg-color;
+    }
+}
+
+.loader {
+    width: 100%;
+    @include flexContainer(row);
+}
+
+:host ::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: $history-card-hover-color;
+}
+
+.btn-action {
+    justify-content: center;
+}
+
+@media (min-width: 550px) {
+    .list-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .list {
+            flex-basis: 45%;
+            margin: 8px;
+        }
+    }
+}

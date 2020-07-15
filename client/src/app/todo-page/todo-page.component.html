@@ -1,0 +1,70 @@
+<div class="wrapper" *ngIf="todo; else loader">
+  <div class="button-container">
+    <button
+      mat-fab
+      aria-label="Complete shopping"
+      #tooltip="matTooltip"
+      matTooltip="Complete shopping"
+      matTooltipPosition="left"
+      [disabled]="currency == ''"
+      (click)="completeTodo()"
+    >
+      <mat-icon>archive</mat-icon>
+    </button>
+  </div>
+  <!-- todo name -->
+  <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="input">
+      <input matInput maxlength="12" type="text" formControlName="name" />
+      <mat-error
+        *ngIf="
+          form.get('name').invalid &&
+          form.get('name').touched &&
+          form.get('name').errors['required']
+        "
+      >
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div class="btn">
+      <button
+        type="button"
+        class="btn-change"
+        mat-raised-button
+        color="primary"
+        [disabled]="changeDisable"
+        (click)="changeName()"
+      >
+        Change
+      </button>
+      <button
+        type="submit"
+        class="btn-save"
+        mat-raised-button
+        color="primary"
+        [disabled]="form.invalid || form.disabled || nameDisable"
+        (click)="onSubmit()"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+  <p class="date-creation">
+    <strong>Date of creation:</strong> {{ todo.date | date: "fullDate" }}
+  </p>
+</div>
+
+<ng-container *ngIf="todo">
+  <hr />
+  <!-- position list -->
+  <app-position
+    [todoId]="todo?._id"
+    (priceTotalRef)="priceTotalEvent($event)"
+    (currencyRef)="currencyEvent($event)"
+  ></app-position>
+</ng-container>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

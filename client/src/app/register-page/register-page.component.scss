@@ -1,0 +1,63 @@
+@import "../../config";
+
+.wrapper {
+    width: $width;
+    margin-top: 2rem;
+
+    .card {
+        width: 95%;
+        margin: 0 auto;
+        @include flexContainer(row);
+        padding: 0.8rem 0;
+
+        .register-form {
+            width: 95%;
+            padding: 0;
+            text-align: center;
+
+            h1 {
+                margin: 0.6rem 0;
+                font-size: 1.5rem;
+            }
+
+            .full-width {
+                width: 100%;
+                position: relative;
+
+                .done-icon,
+                .error-icon {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+                .done-icon {
+                    color: $done-icon;
+                }
+
+                .error-icon {
+                    color: $invalid-color;
+                }
+            }
+            .btn {
+                @include set-background($active-links-color);
+                font-weight: bold;
+                margin-top: 0.5rem;
+                &:disabled {
+                    @include set-background($btn-disabled);
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 450px) {
+    .wrapper {
+        .card {
+            width: 400px;
+
+            .register-form {
+                width: 90%;
+            }
+        }
+    }
+}

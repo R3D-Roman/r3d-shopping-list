@@ -1,0 +1,77 @@
+@import "../../../../config";
+
+.name-quantity-container,
+.name-input,
+.quantity-input,
+.price-option-container,
+.price,
+.option,
+.currency {
+    width: 100%;
+}
+
+form {
+    width: $width;
+    text-align: center;
+
+    .form {
+        width: $width;
+        @include flexContainer(column);
+
+        .name-quantity-container {
+            @include flexContainer(column);
+        }
+
+        .price-option-container {
+            @include flexContainer(column);
+        }
+    }
+
+    .btn-container {
+        @include flexContainer(row);
+        justify-content: flex-end;
+
+        .btn-add-position {
+            margin-top: 1rem;
+        }
+
+        .btn-cancel {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+@media (min-width: 650px) {
+    form {
+        width: 400px;
+        margin: 0 auto;
+
+        .form {
+            .price-option-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-self: center;
+
+                .price {
+                    width: 20%;
+                }
+                .currency,
+                .option {
+                    width: 30%;
+                }
+            }
+
+            .name-quantity-container {
+                flex-direction: row;
+                justify-content: space-between;
+
+                .name-input {
+                    width: 45%;
+                }
+                .quantity-input {
+                    width: 35%;
+                }
+            }
+        }
+    }
+}

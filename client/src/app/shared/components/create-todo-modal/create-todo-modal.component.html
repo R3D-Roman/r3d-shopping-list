@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>Ready for shopping</h1>
+  <div mat-dialog-content>
+    <mat-form-field class="full-width">
+      <mat-label>Create Todo</mat-label>
+      <input
+        matInput
+        placeholder="name"
+        formControlName="name"
+        maxlength="12"
+      />
+      <span class="material-icons done-icon" *ngIf="form.get('name').valid">
+        done
+      </span>
+      <span
+        class="material-icons error-icon"
+        *ngIf="
+          form.get('name').invalid &&
+          form.get('name').touched &&
+          form.get('name').errors['required']
+        "
+      >
+        error
+      </span>
+      <mat-error
+        *ngIf="
+          form.get('name').invalid &&
+          form.get('name').touched &&
+          form.get('name').errors['required']
+        "
+      >
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="btn">
+    <button
+      type="button"
+      mat-raised-button
+      color="accent"
+      mat-dialog-close
+      [disabled]="form.disabled"
+    >
+      Cancel
+    </button>
+    <button
+      class="btn-submit"
+      type="submit"
+      mat-raised-button
+      [disabled]="form.disabled || form.invalid"
+    >
+      Create
+    </button>
+  </div>
+</form>

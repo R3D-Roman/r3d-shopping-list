@@ -1,0 +1,59 @@
+@import "../../config";
+
+.wrapper {
+    overflow: hidden;
+    padding: 0 10px;
+
+    .btn {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .list {
+        margin: 1rem auto;
+        width: 100%;
+
+        .list-item {
+            margin: 1rem 0;
+            border-radius: 10px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            background-color: rgb(237, 248, 252);
+            box-shadow: -2px -5px 5px rgb(209, 209, 209), 2px 5px 5px black;
+            cursor: pointer;
+            transition: all 0.5s ease;
+
+            &:hover {
+                background-color: rgb(206, 218, 223);
+            }
+
+            .flex {
+                width: 100%;
+                @include flexContainer(row);
+                justify-content: space-between;
+
+                .material-icons {
+                    cursor: pointer;
+                    color: rgb(212, 0, 0);
+                }
+            }
+        }
+    }
+}
+
+hr {
+    margin: 1.2rem 0;
+    background-color: black;
+}
+
+.empty {
+    width: 100%;
+}
+
+@media (min-width: 500px) {
+    .wrapper {
+        .list {
+            width: 450px;
+        }
+    }
+}
